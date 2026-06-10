@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Link Verification System | @rec2arc</title>
+    <link rel="icon" type="image/png" href="/Download.png">
+    
+    <!-- Professional Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --brand-color: #007AFF; /* Official Blue */
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+            --border: #d2d2d7;
+            --success: #34c759;
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;
+        }
+
+        .verify-card { 
+            background: var(--card-bg); 
+            padding: 40px 32px; 
+            border-radius: 18px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            width: 100%;
+            max-width: 400px; 
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .header-logo {
+            margin-bottom: 24px;
+        }
+
+        .header-logo i {
+            font-size: 42px;
+            color: var(--brand-color);
+        }
+
+        h2 { 
+            font-size: 24px; 
+            font-weight: 700; 
+            margin: 0 0 12px 0;
+            letter-spacing: -0.5px;
+        }
+
+        p { 
+            color: var(--text-secondary); 
+            font-size: 15px; 
+            line-height: 1.5;
+            margin-bottom: 32px; 
+        }
+
+        /* Minimal Official Loader */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(0, 122, 255, 0.2);
+            border-top-color: var(--brand-color);
+            border-radius: 50%;
+            animation: rotation 0.6s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes rotation { to { transform: rotate(360deg); } }
+
+        .btn-primary {
+            background-color: var(--brand-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover { background-color: #0062cc; }
+        .btn-primary:active { transform: scale(0.98); }
+
+        .error-state { 
+            display: none;
+            color: #d70015;
+            background: #fff2f2;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .footer-info {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f2f2f7;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tg-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #222;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="verify-card">
+    <div class="header-logo" id="iconBox">
+        <i class="fa-solid fa-shield-check"></i>
+    </div>
+
+    <div id="loader" class="spinner"></div>
+
+    <h2 id="title">Link Verification</h2>
+    <p id="status-text">To maintain security, please confirm you are not a bot by clicking verify below.</p>
+    
+    <button id="action-btn" class="btn-primary" onclick="processVerify()">Verify Now</button>
+    
+    <div id="expiry-note" class="error-state">
+        <i class="fa-solid fa-circle-exclamation"></i>&nbsp; 
+        This link is invalid or has expired.
+    </div>
+
+    <div class="footer-info">
+        <i class="fa-solid fa-lock" style="font-size: 11px;"></i>
+        Secured by @HindiAnimestuff Official
+    </div>
+</div>
+
+<a href="/support.html" class="tg-link" target="_blank">
+    <i class="fa-brands fa-telegram"></i> Support
+</a>
+
+<script>
+const links = {
+    "abc": "/HSAcotes3cxv720.html",
+    "xyz": "/HSAcotes3cxggv1080.html",
+    "HindiAnimestuff-": "",
+    "HindiAnimestuff-Re-Zero-Starting-Life-In-Another-World": "https://gplinks.co/Re-Zero-Starting-Life",
+    "HindiAnimestuff": "https://youtu.be/JLD8SyY3o6Q?si=SUZGlXc99SShj0wr",
+    "Yowayowa-Sensei-Hindi": "https://t.me/Hentaii_DubBot?start=BQADAQADpwoAAiVzKEWIDF_mZqQKohYE", 
+    "The-Share-House-s-Secret-Rule-Season-1": "https://t.me/Hentaii_DubBot?start=BQADAQADCQwAAiVzKEW1-twQ73hynxYE",
+    "That-Time-I-Got-Reincarnated-as-a-Slime-EP01": "https://t.me/Hentaii_DubBot?start=BQADAQADDhYAAiVzKEW2KQ5AJTnQthYE", 
+    "Adam's-Sweet-Agony": "https://t.me/Hentaii_DubBot?start=BQADAQADfgwAAiVzKEWJccxYNdO4JBYE", 
+    "Overlord Season 01": "https://t.me/Hentaii_DubBot?start=BQADAQADSxgAAiVzKEVuj6gs3h80ThYE"
+};
+
+const urlParams = new URLSearchParams(window.location.search);
+const baseKey = urlParams.get("id");
+
+const btn = document.getElementById("action-btn");
+const loader = document.getElementById("loader");
+const statusText = document.getElementById("status-text");
+const expiryNote = document.getElementById("expiry-note");
+const title = document.getElementById("title");
+const iconBox = document.getElementById("iconBox");
+
+// Validation
+if (!baseKey || !links[baseKey]) {
+    btn.style.display = "none";
+    statusText.style.display = "none";
+    expiryNote.style.display = "block";
+    title.innerText = "Access Denied";
+    iconBox.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: #d70015;"></i>';
+}
+
+function processVerify() {
+    // Stage 1: Loading
+    btn.style.display = "none";
+    iconBox.style.display = "none";
+    loader.style.display = "block";
+    statusText.innerText = "Securing connection...";
+
+    setTimeout(() => {
+        // Stage 2: Success
+        loader.style.display = "none";
+        iconBox.style.display = "block";
+        iconBox.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #34c759;"></i>';
+        
+        title.innerText = "Verified";
+        statusText.innerText = "Verification complete. You can now proceed to the requested page.";
+        
+        btn.style.display = "block";
+        btn.innerText = "Proceed to Link";
+        btn.style.backgroundColor = "#34c759";
+        
+        btn.onclick = function() {
+            window.location.href = links[baseKey];
+        };
+    }, 2000); 
+}
+</script>
+
+</body>
+</html>

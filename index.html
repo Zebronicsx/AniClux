@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HindiDubAnime — Hindi Dubbed Anime</title>
+    <meta name="description" content="Watch your favourite anime in Hindi Dub. Free, fast, HD quality.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --red: #E8003D;
+            --red-dark: #b0002e;
+            --red-glow: rgba(232,0,61,0.3);
+            --gold: #FFD000;
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --surface2: #18181f;
+            --border: #2a2a35;
+            --text: #f0f0f5;
+            --muted: #888899;
+            --heading: 'Bebas Neue', cursive;
+            --body: 'Nunito', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--body);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ── NOISE OVERLAY ─────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.5;
+        }
+
+        /* ── NAVBAR ─────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            height: 64px;
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--heading);
+            font-size: 26px;
+            letter-spacing: 2px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: var(--red); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-tg {
+            background: var(--red);
+            color: white !important;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: background 0.2s !important;
+        }
+
+        .nav-tg:hover { background: var(--red-dark) !important; color: white !important; }
+
+        /* ── HERO ────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        /* BIG background text */
+        .hero-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--heading);
+            font-size: clamp(120px, 22vw, 280px);
+            color: rgba(255,255,255,0.025);
+            white-space: nowrap;
+            letter-spacing: 10px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Radial glow from left */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: -10%;
+            width: 70%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(232,0,61,0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        /* Diagonal stripe accent */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 40%, rgba(232,0,61,0.04) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(232,0,61,0.12);
+            border: 1px solid rgba(232,0,61,0.35);
+            color: #ff4d7a;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-badge .pulse {
+            width: 7px; height: 7px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: blink 1.5s ease infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        h1 {
+            font-family: var(--heading);
+            font-size: clamp(56px, 9vw, 110px);
+            line-height: 0.92;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.7s 0.1s ease both;
+        }
+
+        h1 .accent { color: var(--red); }
+        h1 .outline {
+            -webkit-text-stroke: 2px rgba(255,255,255,0.4);
+            color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: 40px;
+            animation: fadeUp 0.7s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.7s 0.3s ease both;
+        }
+
+        .btn-main {
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-family: var(--body);
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 30px var(--red-glow);
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-main:hover { background: #ff1a52; transform: translateY(-2px); box-shadow: 0 6px 40px var(--red-glow); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            padding: 16px 28px;
+            border-radius: 10px;
+            font-family: var(--body);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-ghost:hover { border-color: var(--muted); background: rgba(255,255,255,0.04); }
+
+        /* Hero right side — floating cards */
+        .hero-right {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: clamp(260px, 35vw, 420px);
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+
+        .anime-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .anime-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+        .anime-card:nth-child(2) { margin-top: 24px; }
+        .anime-card:nth-child(3) { margin-top: -24px; }
+
+        .anime-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Placeholder gradient for anime cards */
+        .anime-card-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 16px;
+        }
+
+        .card-gradient-1 { background: linear-gradient(160deg, #1a0a20, #3d0a1a, #1a0510); }
+        .card-gradient-2 { background: linear-gradient(160deg, #0a101a, #0a2040, #051020); }
+        .card-gradient-3 { background: linear-gradient(160deg, #1a1200, #3d2e00, #1a1500); }
+        .card-gradient-4 { background: linear-gradient(160deg, #0a1a15, #083028, #050f0a); }
+
+        .anime-thumb-icon {
+            font-size: 44px;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .anime-card-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .anime-card-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--red);
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .anime-card-ep {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── STATS STRIP ─────────────────────────────────── */
+        .stats-strip {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 28px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            max-width: 220px;
+            text-align: center;
+            padding: 0 24px;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat-item:last-child { border-right: none; }
+
+        .stat-num {
+            font-family: var(--heading);
+            font-size: 48px;
+            color: var(--red);
+            line-height: 1;
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ── SECTION ─────────────────────────────────────── */
+        section {
+            padding: 80px 5%;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 36px;
+            gap: 16px;
+        }
+
+        .section-title {
+            font-family: var(--heading);
+            font-size: clamp(34px, 5vw, 54px);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .section-title span { color: var(--red); }
+
+        .see-all {
+            color: var(--red);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: gap 0.2s;
+        }
+
+        .see-all:hover { gap: 10px; }
+
+        /* ── ANIME GRID ──────────────────────────────────── */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .grid-card:hover { transform: translateY(-6px); border-color: rgba(232,0,61,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,0,61,0.15); }
+
+        .grid-card-img {
+            aspect-ratio: 3/4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-card-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        }
+
+        .grid-card-body {
+            padding: 12px;
+        }
+
+        .grid-card-title {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .grid-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .meta-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-hindi { background: rgba(232,0,61,0.15); color: #ff4d7a; }
+        .tag-sub { background: rgba(255,208,0,0.12); color: var(--gold); }
+        .tag-new { background: rgba(16,185,129,0.15); color: #10B981; }
+
+        .meta-ep { font-size: 11px; color: var(--muted); }
+
+        /* ── FEATURES ────────────────────────────────────── */
+        .features-section { background: var(--surface); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover { border-color: rgba(232,0,61,0.35); }
+
+        .feature-icon {
+            width: 52px; height: 52px;
+            background: rgba(232,0,61,0.12);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--red);
+            margin-bottom: 18px;
+        }
+
+        .feature-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── TELEGRAM CTA ────────────────────────────────── */
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, #0d0d14, #160d18);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(232,0,61,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            font-family: var(--heading);
+            font-size: clamp(40px, 7vw, 80px);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .cta-section p {
+            color: var(--muted);
+            font-size: 16px;
+            max-width: 480px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .btn-telegram {
+            background: #2AABEE;
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-family: var(--body);
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(42,171,238,0.3);
+            transition: all 0.25s;
+        }
+
+        .btn-telegram:hover { background: #1a9bd4; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(42,171,238,0.4); }
+
+        /* ── MARQUEE ─────────────────────────────────────── */
+        .marquee-wrap {
+            overflow: hidden;
+            background: var(--red);
+            padding: 10px 0;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 40px;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: var(--heading);
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .marquee-item span { color: white; }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 48px 5% 28px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            font-family: var(--heading);
+            font-size: 30px;
+            letter-spacing: 2px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .footer-brand span { color: var(--red); }
+
+        .footer-tagline {
+            font-size: 13px;
+            color: var(--muted);
+            max-width: 260px;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover { color: var(--red); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom p { font-size: 13px; color: var(--muted); }
+
+        .social-links { display: flex; gap: 12px; }
+
+        .social-btn {
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+
+        /* ── SEARCH BAR ──────────────────────────────────── */
+        .search-wrap {
+            max-width: 560px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 56px 16px 20px;
+            font-family: var(--body);
+            font-size: 15px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.25s;
+        }
+
+        .search-input::placeholder { color: var(--muted); }
+        .search-input:focus { border-color: var(--red); }
+
+        .search-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        /* ── MOBILE ──────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .hero-right { display: none; }
+            .hero { min-height: 100svh; align-items: flex-end; padding-bottom: 60px; }
+            .hero-content { max-width: 100%; }
+            .nav-links { display: none; }
+            .stats-strip { gap: 0; }
+            .stat-item { padding: 0 12px; }
+            .stat-num { font-size: 36px; }
+            .footer-top { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="/" class="nav-logo">HINDI<span>DUB</span>ANIME</a>
+    <ul class="nav-links">
+        <li><a href="#latest">Latest</a></li>
+        <li><a href="#popular">Popular</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="https://t.me/HindiAnimestuff" target="_blank" class="nav-tg"><i class="fa-brands fa-telegram"></i> Join Telegram</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg-text">ANIME</div>
+
+    <div class="hero-content">
+        <div class="hero-badge">
+            <div class="pulse"></div>
+            Now Streaming in Hindi
+        </div>
+
+        <h1>
+            WATCH<br>
+            <span class="accent">ANIME</span><br>
+            <span class="outline">IN HINDI</span>
+        </h1>
+
+        <p class="hero-sub">
+            Apne favourite anime ko Hindi dub mein enjoy karo — bilkul free, HD quality, aur koi sign-up nahi.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#latest" class="btn-main">
+                <i class="fa-solid fa-play"></i>
+                Abhi Dekho
+            </a>
+            <a href="https://t.me/HindiAnimestuff" target="_blank" class="btn-ghost">
+                <i class="fa-brands fa-telegram"></i>
+                Telegram Join Karo
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating anime cards -->
+    <div class="hero-right">
+        <div class="anime-card">
+            <div class="anime-card-placeholder card-gradient-1">
+                <div class="anime-thumb-icon">⚔️</div>
+                <div class="anime-card-label">Re:Zero</div>
+            </div>
+            <div class="anime-card-tag">Hindi</div>
+            <div class="anime-card-ep"><i class="fa-solid fa-star"></i> 9.1</div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-card-placeholder card-gradient-2">
+                <div class="anime-thumb-icon">👑</div>
+                <div class="anime-card-label">Overlord</div>
+            </div>
+            <div class="anime-card-tag">Hindi</div>
+            <div class="anime-card-ep"><i class="fa-solid fa-star"></i> 8.8</div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-card-placeholder card-gradient-3">
+                <div class="anime-thumb-icon">🔥</div>
+                <div class="anime-card-label">Demon Slayer</div>
+            </div>
+            <div class="anime-card-tag">New</div>
+            <div class="anime-card-ep"><i class="fa-solid fa-star"></i> 9.4</div>
+        </div>
+        <div class="anime-card">
+            <div class="anime-card-placeholder card-gradient-4">
+                <div class="anime-thumb-icon">💀</div>
+                <div class="anime-card-label">Attack on Titan</div>
+            </div>
+            <div class="anime-card-tag">Hindi</div>
+            <div class="anime-card-ep"><i class="fa-solid fa-star"></i> 9.7</div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+    <div class="stat-item">
+        <span class="stat-num" data-target="500">0</span>
+        <span class="stat-label">+ Anime Series</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num" data-target="50">0</span>
+        <span class="stat-label">K+ Subscribers</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num" data-target="100">0</span>
+        <span class="stat-label">% Free</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-num" data-target="720">0</span>
+        <span class="stat-label">p HD Quality</span>
+    </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+        <div class="marquee-item">★ <span>RE:ZERO</span></div>
+        <div class="marquee-item">★ <span>OVERLORD</span></div>
+        <div class="marquee-item">★ <span>DEMON SLAYER</span></div>
+        <div class="marquee-item">★ <span>ATTACK ON TITAN</span></div>
+        <div class="marquee-item">★ <span>ONE PIECE</span></div>
+        <div class="marquee-item">★ <span>NARUTO</span></div>
+        <div class="marquee-item">★ <span>DRAGON BALL</span></div>
+        <div class="marquee-item">★ <span>BLEACH</span></div>
+        <div class="marquee-item">★ <span>JUJUTSU KAISEN</span></div>
+        <!-- duplicate for seamless -->
+        <div class="marquee-item">★ <span>RE:ZERO</span></div>
+        <div class="marquee-item">★ <span>OVERLORD</span></div>
+        <div class="marquee-item">★ <span>DEMON SLAYER</span></div>
+        <div class="marquee-item">★ <span>ATTACK ON TITAN</span></div>
+        <div class="marquee-item">★ <span>ONE PIECE</span></div>
+        <div class="marquee-item">★ <span>NARUTO</span></div>
+        <div class="marquee-item">★ <span>DRAGON BALL</span></div>
+        <div class="marquee-item">★ <span>BLEACH</span></div>
+        <div class="marquee-item">★ <span>JUJUTSU KAISEN</span></div>
+    </div>
+</div>
+
+<!-- LATEST -->
+<section id="latest">
+    <div class="section-header">
+        <div class="section-title">LATEST <span>RELEASES</span></div>
+        <a href="https://t.me/HindiAnimestuff" class="see-all" target="_blank">View All <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="Anime dhundo... (e.g. Re:Zero, Overlord)" id="searchInput">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="anime-grid" id="animeGrid">
+        <!-- Cards generated by JS -->
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="section-header">
+        <div class="section-title">KYUN <span>HUMSE?</span></div>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-language"></i></div>
+            <div class="feature-title">Pure Hindi Dub</div>
+            <div class="feature-desc">Sab anime original Hindi dubbing ke saath — ek dum desi experience ke liye.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="feature-title">Super Fast Links</div>
+            <div class="feature-desc">Verified aur fast download links jo hamesha kaam karte hain. Koi dead link nahi.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="feature-title">Safe & Verified</div>
+            <div class="feature-desc">Har link humara verification system se guzarta hai — 100% safe content.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="feature-title">Bilkul Free</div>
+            <div class="feature-desc">Koi subscription, koi login, koi fee nahi. Seedha click karo aur enjoy karo.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
+            <div class="feature-title">Instant Updates</div>
+            <div class="feature-desc">Telegram pe join karo aur naye episodes ki notification turant pao.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-film"></i></div>
+            <div class="feature-title">HD Quality</div>
+            <div class="feature-desc">720p aur 1080p quality available — crystal clear picture aur sound.</div>
+        </div>
+    </div>
+</section>
+
+<!-- TELEGRAM CTA -->
+<section class="cta-section">
+    <h2>JOIN THE <span style="color:var(--red)">CREW</span></h2>
+    <p>50,000+ anime fans already Telegram pe hain. Naye episodes, updates aur exclusive content ke liye abhi join karo.</p>
+    <a href="https://t.me/HindiAnimestuff" target="_blank" class="btn-telegram">
+        <i class="fa-brands fa-telegram" style="font-size:22px"></i>
+        @HindiAnimestuff Join Karo
+    </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div>
+            <div class="footer-brand">HINDI<span>DUB</span>ANIME</div>
+            <div class="footer-tagline">Apni language mein, apni duniya mein — anime ko feel karo Hindi mein.</div>
+        </div>
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#latest"><i class="fa-solid fa-play fa-fw"></i> Latest Anime</a></li>
+                <li><a href="#popular"><i class="fa-solid fa-fire fa-fw"></i> Popular</a></li>
+                <li><a href="https://t.me/HindiAnimestuff" target="_blank"><i class="fa-brands fa-telegram fa-fw"></i> Telegram Channel</a></li>
+                <li><a href="/support.html"><i class="fa-solid fa-headset fa-fw"></i> Support</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Genres</h4>
+            <ul>
+                <li><a href="#"><i class="fa-solid fa-sword fa-fw"></i> Action</a></li>
+                <li><a href="#"><i class="fa-solid fa-dragon fa-fw"></i> Fantasy</a></li>
+                <li><a href="#"><i class="fa-solid fa-ghost fa-fw"></i> Horror</a></li>
+                <li><a href="#"><i class="fa-solid fa-heart fa-fw"></i> Romance</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 HindiDubAnime · @HindiAnimestuff · All content belongs to their respective owners.</p>
+        <div class="social-links">
+            <a href="https://t.me/HindiAnimestuff" target="_blank" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://youtu.be/JLD8SyY3o6Q?si=SUZGlXc99SShj0wr" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ── ANIME DATA ──────────────────────────────────────────────────────────────
+const animeList = [
+    { title: "Re:Zero — Starting Life in Another World", emoji: "⚔️", gradient: "card-gradient-1", tag: "hindi", episodes: 25, rating: 9.1, key: "HindiAnimestuff-Re-Zero-Starting-Life-In-Another-World" },
+    { title: "Overlord Season 01", emoji: "👑", gradient: "card-gradient-2", tag: "hindi", episodes: 13, rating: 8.8, key: "Overlord Season 01" },
+    { title: "The Share House's Secret Rule S1", emoji: "🏠", gradient: "card-gradient-4", tag: "hindi", episodes: 12, rating: 7.5, key: "The-Share-House-s-Secret-Rule-Season-1" },
+    { title: "HindiAnimestuff Official", emoji: "🎬", gradient: "card-gradient-3", tag: "new", episodes: null, rating: null, key: "HindiAnimestuff" },
+];
+
+function getTagHTML(tag) {
+    if (tag === "hindi") return '<span class="meta-tag tag-hindi">Hindi Dub</span>';
+    if (tag === "sub") return '<span class="meta-tag tag-sub">Subbed</span>';
+    if (tag === "new") return '<span class="meta-tag tag-new">New</span>';
+    return '';
+}
+
+function renderGrid(list) {
+    const grid = document.getElementById("animeGrid");
+    grid.innerHTML = list.map(a => `
+        <a class="grid-card" href="/verify.html?id=${encodeURIComponent(a.key)}">
+            <div class="grid-card-img ${a.gradient}">
+                <span style="position:relative;z-index:1">${a.emoji}</span>
+            </div>
+            <div class="grid-card-body">
+                <div class="grid-card-title">${a.title}</div>
+                <div class="grid-card-meta">
+                    ${getTagHTML(a.tag)}
+                    <span class="meta-ep">${a.episodes ? a.episodes + ' Ep' : ''} ${a.rating ? '★ ' + a.rating : ''}</span>
+                </div>
+            </div>
+        </a>
+    `).join('');
+}
+
+renderGrid(animeList);
+
+// ── SEARCH ──────────────────────────────────────────────────────────────────
+document.getElementById("searchInput").addEventListener("input", function() {
+    const q = this.value.toLowerCase().trim();
+    renderGrid(q ? animeList.filter(a => a.title.toLowerCase().includes(q)) : animeList);
+});
+
+// ── COUNTER ANIMATION ───────────────────────────────────────────────────────
+const counters = document.querySelectorAll('[data-target]');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let cur = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+            cur = Math.min(cur + step, target);
+            el.textContent = Math.floor(cur);
+            if (cur >= target) { el.textContent = target; clearInterval(timer); }
+        }, 16);
+        observer.unobserve(el);
+    });
+}, { threshold: 0.5 });
+
+counters.forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>
